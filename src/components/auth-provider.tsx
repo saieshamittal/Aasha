@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react"
 import { authService, UserProfile, AuthError } from '../services/authService'
-import { storeToken, removeToken, storeUser, removeUser, clearAuthData, getToken } from '../utils/tokenUtils'
+import { storeToken, removeToken, storeUser, removeUser, clearAuthData, getToken, getUser } from '../utils/tokenUtils'
 
 type UserRole = "admin" | "ngo" | "guest" | null
 
@@ -42,6 +42,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Check for existing authentication on app load
     const initializeAuth = async () => {
       try {
+        const storedUser = getUser()
+
         // Check if we have a valid token
         const token = getToken()
         if (token) {
@@ -49,10 +51,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const currentUser = await authService.getCurrentUser()
           if (currentUser) {
             setUser(currentUser)
+          } else if (storedUser) {
+            // Local demo staff session fallback
+            setUser(storedUser)
           } else {
             // Token exists but user not found, clear auth data
             clearAuthData()
           }
+        } else if (storedUser) {
+          setUser(storedUser)
         }
       } catch (error) {
         console.error('Auth initialization error:', error)
@@ -78,10 +85,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         storeUser(userProfile)
         setUser(userProfile)
         return true
-      } else {
-        setError('Failed to get authentication token')
-        return false
       }
+
+      const isLocalDemoAccount = userProfile.role === 'admin' || userProfile.role === 'ngo'
+      if (isLocalDemoAccount) {
+        storeToken('local-demo-token')
+        storeUser(userProfile)
+        setUser(userProfile)
+        return true
+      }
+
+      setError('Failed to get authentication token')
+      return false
     } catch (error: any) {
       const authError = error as AuthError
       setError(authError.message)
@@ -137,6 +152,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const guestProfile = await authService.signInAsGuest()
       setUser(guestProfile)
+      storeToken('guest-demo-token')
       storeUser(guestProfile)
       return true
     } catch (error: any) {
