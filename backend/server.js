@@ -12,7 +12,8 @@ const connectDB = require('./config/database');
 
 // Import routes
 const survivorStoriesRoutes = require('./routes/survivorStories');
-const redZoneRoutes = require('./routes/redZones');
+// const redZoneRoutes = require('./routes/redZones');
+const redZoneRoutes = require('./routes/redzones');
 const therapistsRoutes = require('./routes/therapists');
 const ngoRoutes = require('./routes/ngos');
 const reportRoutes = require('./routes/reports');
