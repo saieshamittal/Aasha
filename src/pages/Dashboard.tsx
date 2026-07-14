@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../components/auth-provider'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { Badge } from '../components/ui/badge'
@@ -6,6 +7,7 @@ import { AlertTriangle, Users, MapPin, Heart, TrendingUp, Shield, HelpCircle, Bo
 
 export default function Dashboard() {
   const { user } = useAuth()
+  const navigate = useNavigate()
 
   const getStatsForRole = () => {
     switch (user?.role) {
@@ -112,8 +114,18 @@ export default function Dashboard() {
           <CardContent>
             <div className="grid gap-3 md:grid-cols-3">
               <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md">Emergency: 911</button>
-              <button className="border border-gray-300 bg-white hover:bg-gray-50 px-4 py-2 rounded-md">Chat with AI Support</button>
-              <button className="border border-gray-300 bg-white hover:bg-gray-50 px-4 py-2 rounded-md">Find Local Resources</button>
+              <button
+                className="border border-gray-300 bg-white hover:bg-gray-50 px-4 py-2 rounded-md"
+                onClick={() => navigate('/dashboard/ai-chat')}
+              >
+                Chat with AI Support
+              </button>
+              <button
+                className="border border-gray-300 bg-white hover:bg-gray-50 px-4 py-2 rounded-md"
+                onClick={() => navigate('/dashboard/get-help')}
+              >
+                Find Local Resources
+              </button>
             </div>
           </CardContent>
         </Card>
