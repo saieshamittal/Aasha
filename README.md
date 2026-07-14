@@ -7,8 +7,8 @@
   <tr>
     <td align="center">
       <a href="https://github.com/saieshamittal">
-        <img src="https://avatars.githubusercontent.com/u/83499482?v=4" width="80px;" alt="Sai Esha Mittal"/><br />
-        <sub><b>Sai Esha Mittal</b></sub>
+        <img src="https://avatars.githubusercontent.com/u/83499482?v=4" width="80px;" alt="Saiesha Mittal"/><br />
+        <sub><b>Saiesha Mittal</b></sub>
       </a>
     </td>
     <td align="center">
