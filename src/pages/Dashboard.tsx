@@ -188,15 +188,24 @@ export default function Dashboard() {
                 </>
               ) : (
                 <>
-                  <button className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 text-left">
+                  <button
+                    className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 text-left"
+                    onClick={() => navigate('/dashboard/submit-report')}
+                  >
                     <AlertTriangle className="h-4 w-4" />
                     <span>Submit New Report</span>
                   </button>
-                  <button className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 text-left">
+                  <button
+                    className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 text-left"
+                    onClick={() => navigate('/dashboard/therapy-network')}
+                  >
                     <Heart className="h-4 w-4" />
                     <span>Schedule Therapy Session</span>
                   </button>
-                  <button className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 text-left">
+                  <button
+                    className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 text-left"
+                    onClick={() => navigate('/dashboard/my-cases')}
+                  >
                     <Users className="h-4 w-4" />
                     <span>Update Case Status</span>
                   </button>
