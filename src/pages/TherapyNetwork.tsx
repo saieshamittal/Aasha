@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { useTherapists, Therapist } from '../hooks/useTherapists'
 
-const API_BASE_URL = 'http://localhost:5005/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export default function TherapyNetwork() {
   const [selectedTherapist, setSelectedTherapist] = useState<Therapist | null>(null)

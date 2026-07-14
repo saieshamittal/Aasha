@@ -13,7 +13,7 @@ export interface Therapist {
   notes: string;
 }
 
-const API_BASE_URL = 'http://localhost:5005/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const useTherapists = (specialization: string = 'all') => {
   const [therapists, setTherapists] = useState<Therapist[]>([]);

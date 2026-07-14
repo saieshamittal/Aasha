@@ -7,7 +7,7 @@ import { Input } from '../components/ui/input'
 import { Calendar, MapPin, User, GraduationCap, Briefcase, Home, X } from 'lucide-react'
 import './SurvivorStories.css'; // Import custom CSS for fade-in effect
 
-const API_BASE_URL = 'http://localhost:5005/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 interface SurvivorStory {
   id: string

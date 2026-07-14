@@ -1,3 +1,4 @@
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 import React, { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button'
@@ -110,7 +111,7 @@ export default function SubmitReport() {
   })
 
   try {
-    const response = await fetch("http://localhost:5005/api/reports/submit", {
+    const response = await fetch(`${API_BASE_URL}/reports/submit`, {
       method: "POST",
       body: form
     })

@@ -1,3 +1,4 @@
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 "use client"
 
 import React, { useState, useEffect } from 'react'
@@ -47,7 +48,7 @@ export default function ReportsPage() {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const res = await fetch('http://localhost:5005/api/reports')
+        const res = await fetch(`${API_BASE_URL}/reports`)
         const json = await res.json()
         if (json.success && Array.isArray(json.data)) {
           // Map backend report fields to frontend Report interface
@@ -165,12 +166,16 @@ export default function ReportsPage() {
       const locality = locationParts.slice(1).join(', ');
       
       // First try structured query (city + locality)
-      let res = await fetch(`http://localhost:5005/api/ngos?city=${encodeURIComponent(city)}&locality=${encodeURIComponent(locality)}&available=true`);
+      let res = await fetch(
+  `${API_BASE_URL}/ngos?city=${encodeURIComponent(city)}&locality=${encodeURIComponent(locality)}&available=true`
+);
       let data = await res.json();
       
       // If no results, fall back to free-form location search
       if (!data || data.length === 0) {
-        res = await fetch(`http://localhost:5005/api/ngos?location=${encodeURIComponent(selectedReport.location)}&available=true`);
+        res = await fetch(
+  `${API_BASE_URL}/ngos?location=${encodeURIComponent(selectedReport.location)}&available=true`
+);
         data = await res.json();
       }
       
@@ -185,18 +190,21 @@ export default function ReportsPage() {
     if (!selectedReport) return;
     setAssigning(true);
     try {
-      const res = await fetch(`http://localhost:5005/api/ngos/${ngo._id}/assign-task`, {
+      const res = await fetch(
+      `${API_BASE_URL}/ngos/${ngo._id}/assign-task`,
+      {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ taskId: selectedReport.id }),
-      });
+      }
+    );
       const data = await res.json();
       if (res.ok) {
         toast({ title: `Task assigned to ${ngo.name}!` });
         setShowAssignModal(false);
         setSelectedReport(null);
         // Refetch reports from backend to get updated status and assignedTo
-        const reportsRes = await fetch('http://localhost:5005/api/reports');
+        const reportsRes = await fetch(`${API_BASE_URL}/reports`);
         const reportsJson = await reportsRes.json();
         if (reportsJson.success && Array.isArray(reportsJson.data)) {
           const mappedReports: Report[] = reportsJson.data.map((r: any) => ({
